@@ -13,10 +13,10 @@ namespace sample
 
     public class ProdutItems
     {
-        public int productId;
-        public string productName;
-        public int productCost;
-        public int productValue;
+        public int productId { get; set; }
+        public string productName { get; set; }
+        public int productCost { get; set; }
+        public int productValue { get; set; }
     }
     public class ShoppingProduct
     {
@@ -25,13 +25,13 @@ namespace sample
             var products = new Produt
             {
                 prouctItems = new List<ProdutItems>()
-            {
-                new ProdutItems() { productId=1, productName= "P1", productCost=1, productValue=200 },
-                new ProdutItems() { productId=2, productName= "P2", productCost=2, productValue=40},
-                new ProdutItems() { productId=3, productName= "P3", productCost=3, productValue=60},
-                new ProdutItems() { productId=4, productName= "P4", productCost=4, productValue=200 }
-            }
-            };
+                {
+                    new ProdutItems() { productId=1, productName= "P1", productCost=1, productValue=200 },
+                    new ProdutItems() { productId=2, productName= "P2", productCost=2, productValue=40},
+                    new ProdutItems() { productId=3, productName= "P3", productCost=3, productValue=60},
+                    new ProdutItems() { productId=4, productName= "P4", productCost=4, productValue=200 }
+                }
+             };
 
             return products;
         }
@@ -47,6 +47,8 @@ namespace sample
                     string combineIds = "";
                     for (int j = 0; j < arrIds.Length; j++)
                     {
+                        //Console.WriteLine("Test => {0} -- {1} --- {2}", i , 1 << (arrIds.Length - j - 1), (i& 1 << (arrIds.Length - j - 1)));
+
                         if ((i & (1 << (arrIds.Length - j - 1))) != 0)
                         {
                             if (combineIds != "")
@@ -59,6 +61,7 @@ namespace sample
                             }
                         }
                     }
+                    //Console.WriteLine(combineIds);
                     arrSubset.Add(combineIds);
                 }
             }
@@ -99,6 +102,10 @@ namespace sample
                         var prodQuery = from Produt in objProds.prouctItems
                                         where Produt.productId == Convert.ToInt32(prodId)
                                         select Produt;
+
+                        var prodQueryMax = from Produt in objProds.prouctItems
+                                           where Produt.productId == Convert.ToInt32(prodId)
+                                           select Produt;
 
                         foreach (var cols in prodQuery)
                         {
@@ -161,7 +168,6 @@ namespace sample
             try
             {
                 int ip_budget = 4;
-
                 var ip_products = FetchProducts();
 
                 int totValue = GetMaxValue(ip_budget, ip_products);
@@ -174,7 +180,6 @@ namespace sample
                 Console.ReadLine();
             }
         }
-
 
     }
 }
